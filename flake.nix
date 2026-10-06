@@ -2,17 +2,19 @@
   description = "The helpful Nix server";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    agenix.url = "github:ryantm/agenix";
     home-manager.url = "github:nix-community/home-manager";
     lazyvim.url = "github:pfassina/lazyvim-nix";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
   outputs =
     {
       self,
-      nixpkgs,
+      agenix,
       home-manager,
       lazyvim,
+      nixpkgs,
       ...
     }@inputs:
     let
@@ -22,9 +24,12 @@
       # Available through 'nixos-rebuild --flake .#navix'
       nixosConfigurations = {
         navix = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
           specialArgs = { inherit inputs; };
-          # > Our main nixos configuration file <
-          modules = [ ./nixos/configuration.nix ];
+          modules = [ 
+            ./nixos/configuration.nix
+            agenix.nixosModules.default
+          ];
         };
       };
 
