@@ -189,7 +189,7 @@
           name = "qBittorrent (VPN)";
           implementation = "QBittorrent";
           fields = {
-            host = config.vpnNamespaces.wg.namespaceAddress;  # 192.168.15.1
+            host = config.vpnNamespaces.wg.namespaceAddress; # 192.168.15.1
             port = config.nixarr.qbittorrent.qui.internalPort; # 8085
           };
         }
@@ -203,7 +203,7 @@
           name = "qBittorrent (VPN)";
           implementation = "QBittorrent";
           fields = {
-            host = config.vpnNamespaces.wg.namespaceAddress;  # 192.168.15.1
+            host = config.vpnNamespaces.wg.namespaceAddress; # 192.168.15.1
             port = config.nixarr.qbittorrent.qui.internalPort; # 8085
           };
         }
@@ -218,7 +218,11 @@
         enable-nixarr-apps = true;
 
         # Define tags for organizing indexers
-        tags = [ "usenet" "torrent" "private" ];
+        tags = [
+          "usenet"
+          "torrent"
+          "private"
+        ];
 
         # Define indexers directly in Nix
         indexers = [

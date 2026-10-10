@@ -24,7 +24,11 @@
     stateVersion = "26.05";
     username = "cepehang";
     homeDirectory = "/home/cepehang";
-    packages = with pkgs; [ claude-code dig gparted ];
+    packages = with pkgs; [
+      claude-code
+      dig
+      gparted
+    ];
   };
 
   programs = {

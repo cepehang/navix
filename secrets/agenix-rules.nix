@@ -5,11 +5,19 @@ let
 in
 {
   "njalla-keys.age" = {
-    publicKeys = [ laptop pc server ];
+    publicKeys = [
+      laptop
+      pc
+      server
+    ];
     armor = true;
   };
   "wireguard.age" = {
-    publicKeys = [ laptop pc server ];
+    publicKeys = [
+      laptop
+      pc
+      server
+    ];
     armor = true;
   };
 }

@@ -28,7 +28,7 @@
         navix = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
-          modules = [ 
+          modules = [
             ./nixos/configuration.nix
             agenix.nixosModules.default
             nixarr.nixosModules.default
