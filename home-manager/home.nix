@@ -24,14 +24,16 @@
     stateVersion = "26.05";
     username = "cepehang";
     homeDirectory = "/home/cepehang";
-    # packages = with pkgs; [ nixfmt ];
+    packages = with pkgs; [ claude-code dig gparted ];
   };
 
   programs = {
     fzf.enable = true;
+    jq.enable = true;
     git = {
       enable = true;
       signing = {
+        format = "ssh";
         key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKRwlMedSAzIJB6X0EiqOUrNaMH5ONoD7lFYbLoBuFI5 Navix Signing Key ndml97@gmail.com";
         signByDefault = true;
       };

@@ -53,8 +53,13 @@
       enable32Bit = true;
     };
     nvidia = {
+      modesetting.enable = true;
       open = false;
       package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+    };
+    bluetooth = {
+      enable = true;
+      powerOnBoot = false;
     };
   };
 
@@ -92,7 +97,6 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      # jack.enable = true;
     };
     openssh = {
       enable = true;
@@ -102,7 +106,143 @@
         PasswordAuthentication = false;
       };
     };
+    lidarr = {
+      settings.auth.required = "DisabledForLocalAddresses";
+    };
+    sonarr = {
+      settings.auth.required = "DisabledForLocalAddresses";
+    };
+    radarr = {
+      settings.auth.required = "DisabledForLocalAddresses";
+    };
+    prowlarr = {
+      settings.auth.required = "DisabledForLocalAddresses";
+    };
+  };
 
+  age.secrets = {
+    njalla-keys.file = ../secrets/njalla-keys.age;
+    wireguard.file = ../secrets/wireguard.age;
+  };
+
+  nixarr = {
+    enable = true;
+    mediaDir = "/data/media";
+    stateDir = "/data/media/.state/nixarr";
+
+    vpn = {
+      enable = true;
+      wgConf = config.age.secrets.wireguard.path;
+    };
+
+    ddns.njalla = {
+      enable = true;
+      keysFile = config.age.secrets.njalla-keys.path;
+    };
+
+    jellyfin = {
+      enable = true;
+      # expose.https = {
+      #   enable = true;
+      #   domainName = "jellyfin.cepehang.com";
+      #   acmeMail = "ndml97@gmail.com";
+      # };
+    };
+
+    qbittorrent = {
+      enable = true;
+      vpn.enable = true;
+      peerPort = 8034;
+      webuiPort = 5252;
+
+      # See: https://github.com/qbittorrent/qBittorrent/wiki/Explanation-of-Options-in-qBittorrent
+      # extraConfig = {
+      #   BitTorrent = {
+      #     "Session\\MaxActiveDownloads" = 3;
+      #     "Session\\MaxActiveTorrents" = 5;
+      #   };
+      # };
+    };
+
+    bazarr = {
+      enable = true;
+      settings-sync = {
+        sonarr.enable = true;
+        sonarr.config = {
+          sync_only_monitored_series = true;
+          sync_only_monitored_episodes = true;
+        };
+
+        radarr.enable = true;
+        radarr.config = {
+          sync_only_monitored_movies = true;
+        };
+      };
+    };
+
+    lidarr.enable = true;
+
+    radarr = {
+      enable = true;
+      downloadClients = [
+        {
+          name = "qBittorrent (VPN)";
+          implementation = "QBittorrent";
+          fields = {
+            host = config.vpnNamespaces.wg.namespaceAddress;  # 192.168.15.1
+            port = config.nixarr.qbittorrent.qui.internalPort; # 8085
+          };
+        }
+      ];
+    };
+
+    sonarr = {
+      enable = true;
+      downloadClients = [
+        {
+          name = "qBittorrent (VPN)";
+          implementation = "QBittorrent";
+          fields = {
+            host = config.vpnNamespaces.wg.namespaceAddress;  # 192.168.15.1
+            port = config.nixarr.qbittorrent.qui.internalPort; # 8085
+          };
+        }
+      ];
+    };
+    seerr.enable = true;
+
+    prowlarr = {
+      enable = true;
+
+      settings-sync = {
+        enable-nixarr-apps = true;
+
+        # Define tags for organizing indexers
+        tags = [ "usenet" "torrent" "private" ];
+
+        # Define indexers directly in Nix
+        indexers = [
+          # {
+          #   sort_name = "nzbgeek";
+          #   tags = [ "usenet" ];
+          #   fields = {
+          #     # Secrets are read from files at runtime, not stored in the Nix store
+          #     apiKey.secret = "/data/.secret/nzbgeek-api-key";
+          #   };
+          # }
+          # {
+          #   sort_name = "torznab";
+          #   name = "Jackett";
+          #   tags = [ "torrent" ];
+          #   fields = {
+          #     baseUrl = "http://localhost:9117/api/v2.0/indexers/all/results/torznab/";
+          #     apiKey.secret = "/data/.secret/jackett-api-key";
+          #   };
+          # }
+        ];
+      };
+    };
+    # exporters.enable = true;
   };
 
   users = {
@@ -127,6 +267,10 @@
 
   programs = {
     firefox.enable = true;
+    nh = {
+      enable = true;
+      flake = "/home/cepehang/Projects/navix/";
+    };
     ssh.startAgent = true;
     zsh.enable = true;
   };
@@ -136,14 +280,5 @@
     wl-clipboard
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "26.05";
 }
