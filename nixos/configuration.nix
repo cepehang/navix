@@ -140,13 +140,17 @@
 
   age.secrets = {
     njalla-keys.file = ../secrets/njalla-keys.age;
-    rutracker-username.file = ../secrets/rutracker-username.age;
-    rutracker-password.file = ../secrets/rutracker-password.age;
     wireguard.file = ../secrets/wireguard.age;
+    rutracker-username = {
+      file = ../secrets/rutracker-username.age;
+      owner = "prowlarr";
+    };
+    rutracker-password = {
+      file = ../secrets/rutracker-password.age;
+      owner = "prowlarr";
+    };
   };
 
-  # /data is the root of the media disk; it must be root-owned, otherwise
-  # systemd-tmpfiles refuses Nixarr's rules under /data/media (unsafe path transition).
   systemd.tmpfiles.rules = [ "z /data 0755 root root -" ];
 
   nixarr = {
@@ -304,7 +308,13 @@
             ];
             media_naming = {
               series = "jellyfin-tvdb";
-              episodes.rename = true;
+              season = "default";
+              episodes = {
+                rename = true;
+                standard = "default";
+                daily = "default";
+                anime = "default";
+              };
             };
           };
         };

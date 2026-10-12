@@ -5,8 +5,7 @@
     agenix.url = "github:ryantm/agenix";
     home-manager.url = "github:nix-community/home-manager";
     lazyvim.url = "github:pfassina/lazyvim-nix";
-    # nixarr.url = "github:nix-media-server/nixarr";
-    nixarr.url = "github:cepehang/nixarr/add-12.2-hash";
+    nixarr.url = "github:nix-media-server/nixarr";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
