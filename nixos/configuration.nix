@@ -145,6 +145,10 @@
     wireguard.file = ../secrets/wireguard.age;
   };
 
+  # /data is the root of the media disk; it must be root-owned, otherwise
+  # systemd-tmpfiles refuses Nixarr's rules under /data/media (unsafe path transition).
+  systemd.tmpfiles.rules = [ "z /data 0755 root root -" ];
+
   nixarr = {
     enable = true;
     mediaDir = "/data/media";
@@ -298,8 +302,10 @@
                 reset_unmatched_scores.enabled = true;
               }
             ];
-            media_naming.series = "jellyfin-tvdb";
-            episodes.rename = true;
+            media_naming = {
+              series = "jellyfin-tvdb";
+              episodes.rename = true;
+            };
           };
         };
         radarr = {
@@ -310,6 +316,13 @@
               type = "movie";
             };
             delete_old_custom_formats = true;
+            quality_profiles = [
+              {
+
+                trash_id = "2572ce3ea4eef1c19d59e0e20ed1cea7"; # [French MULTi.VO] HD Bluray + WEB
+                reset_unmatched_scores.enabled = true;
+              }
+            ];
             media_naming = {
               folder = "jellyfin-tmdb";
               movie = {
