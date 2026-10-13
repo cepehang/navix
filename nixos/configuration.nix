@@ -11,6 +11,7 @@
     inputs.home-manager.nixosModules.home-manager
     ./hardware-configuration.nix
     ./desktop.nix
+    ./kodi.nix
     ./locale.nix
     ./networking.nix
     ./nixarr.nix
