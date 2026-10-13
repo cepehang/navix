@@ -184,7 +184,6 @@
       peerPort = 8034;
       webuiPort = 5252;
 
-      # See: https://github.com/qbittorrent/qBittorrent/wiki/Explanation-of-Options-in-qBittorrent
       # extraConfig = {
       #   BitTorrent = {
       #     "Session\\MaxActiveDownloads" = 3;
@@ -242,7 +241,15 @@
         ];
       };
     };
-    seerr.enable = true;
+
+    seerr = {
+      enable = true;
+      expose.https = {
+        enable = true;
+        domainName = "seerr.cepehang.com";
+        acmeMail = "ndml97@gmail.com";
+      };
+    };
 
     prowlarr = {
       enable = true;
