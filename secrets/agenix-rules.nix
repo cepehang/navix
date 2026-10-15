@@ -27,4 +27,20 @@ in
     publicKeys = cepehangKeys;
     armor = true;
   };
+  "eweka-username.age" = {
+    publicKeys = cepehangKeys;
+    armor = true;
+  };
+  "eweka-password.age" = {
+    publicKeys = cepehangKeys;
+    armor = true;
+  };
+  "sabnzbd-api-key.age" = {
+    publicKeys = cepehangKeys;
+    armor = true;
+  };
+  "nzbgeek-api-key.age" = {
+    publicKeys = cepehangKeys;
+    armor = true;
+  };
 }

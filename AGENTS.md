@@ -61,8 +61,8 @@ nix flake update [input]  # update the lockfile (or a single input)
 - Prefer Nixarr options (`nixarr.<service>.*`) over configuring the underlying
   `services.<service>` directly. Upstream `services.*` settings are only used for things
   Nixarr doesn't expose (e.g. `settings.auth.required` on the *arr apps).
-- Check option names against the Nixarr docs/source for the pinned revision; the input
-  currently points to a fork (`github:cepehang/nixarr/add-12.2-hash`) rather than upstream.
+- Check option names against the Nixarr docs/source for the revision pinned in `flake.lock`
+  (upstream `github:nix-media-server/nixarr`).
 - Media lives under `/data/media`; Nixarr state under `/data/media/.state/nixarr`.
 - Commits are SSH-signed by default (configured in Home Manager). Use conventional-commit
   style messages (`feat:`, `fix:`, `chore:` …) to match history.

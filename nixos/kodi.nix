@@ -9,7 +9,10 @@
   users.users.kodi = {
     isNormalUser = true;
     description = "Kodi";
+    hashedPassword = "";
   };
+
+  security.pam.services.sddm.allowNullPassword = true;
 
   services = {
     xserver = {
@@ -29,16 +32,13 @@
       };
     };
     displayManager = {
-      # SDDM autologin uses the default session, so Kodi has to be the default.
-      # Pick "Plasma (Wayland)" from the session menu when logging in as cepehang.
       defaultSession = "kodi";
       autoLogin = {
         enable = true;
         user = "kodi";
       };
     };
-    # WirePlumber starts unsaved outputs at 0.064 (-24 dB). The kodi user never
-    # touches the system volume, so start them at full and let Kodi control it.
+    # set full volume instead of 0.064 (-24 dB)
     pipewire.wireplumber.extraConfig."60-default-sink-volume" = {
       "wireplumber.settings"."device.routes.default-sink-volume" = 1.0;
     };

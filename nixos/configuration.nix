@@ -67,6 +67,8 @@
   programs = {
     nh = {
       enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 14d --keep 14";
       flake = "/home/cepehang/Projects/navix/";
     };
     ssh.startAgent = true;
