@@ -12,8 +12,6 @@
     hashedPassword = "";
   };
 
-  security.pam.services.sddm.allowNullPassword = true;
-
   # Let Kodi power off/reboot even when other sessions (e.g. SSH) are open;
   # otherwise polkit asks for admin auth, which Kodi can't provide, and it hangs.
   security.polkit.extraConfig = ''

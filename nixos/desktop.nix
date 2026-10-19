@@ -9,8 +9,9 @@
   };
 
   services = {
-    displayManager.sddm.enable = true;
-    desktopManager.plasma6.enable = true;
+    xserver.desktopManager.xfce.enable = true;
+    # XFCE pulls in gnome-keyring's SSH agent; keep programs.ssh.startAgent instead
+    gnome.gcr-ssh-agent.enable = false;
     pulseaudio.enable = false;
     pipewire = {
       enable = true;
@@ -22,11 +23,7 @@
 
   programs.firefox.enable = true;
 
-  users.users."cepehang".packages = with pkgs; [
-    kdePackages.kate
-  ];
-
   environment.systemPackages = with pkgs; [
-    wl-clipboard
+    xclip
   ];
 }
