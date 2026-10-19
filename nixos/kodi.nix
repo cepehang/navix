@@ -14,9 +14,29 @@
 
   security.pam.services.sddm.allowNullPassword = true;
 
+  # Let Kodi power off/reboot even when other sessions (e.g. SSH) are open;
+  # otherwise polkit asks for admin auth, which Kodi can't provide, and it hangs.
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (subject.user == "kodi" &&
+          (action.id.indexOf("org.freedesktop.login1.power-off") == 0 ||
+           action.id.indexOf("org.freedesktop.login1.reboot") == 0)) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
+
   services = {
     xserver = {
       enable = true;
+      # Never blank/DPMS-off the display: turning it off drops the HDMI link,
+      # the NVIDIA HDMI sink disappears and Kodi comes back without sound.
+      serverFlagsSection = ''
+        Option "BlankTime" "0"
+        Option "StandbyTime" "0"
+        Option "SuspendTime" "0"
+        Option "OffTime" "0"
+      '';
       desktopManager.kodi = {
         enable = true;
         # Force VDPAU instead of VAAPI which does not work with the
