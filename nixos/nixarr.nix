@@ -65,12 +65,12 @@
       peerPort = 8034;
       webuiPort = 5252;
 
-      # extraConfig = {
-      #   BitTorrent = {
-      #     "Session\\MaxActiveDownloads" = 3;
-      #     "Session\\MaxActiveTorrents" = 5;
-      #   };
-      # };
+      extraConfig = {
+        BitTorrent = {
+          "Session\\MaxActiveDownloads" = 3;
+          "Session\\MaxActiveTorrents" = 25;
+        };
+      };
     };
 
     # Usenet over TLS to the provider, so no VPN
@@ -224,6 +224,41 @@
                 trash_id = "20e0fc959f1f1704bed501f23bdae76f"; # [Anime] Remux-1080p
                 name = "Animé";
                 reset_unmatched_scores.enabled = true;
+                upgrade = {
+                  allowed = true;
+                  until_quality = "Bluray-1080p";
+                };
+                qualities = [
+                  # disable Remux-1080p because of obscene file sizes
+                  { name = "Bluray-1080p"; }
+                  {
+                    name = "WEB 1080p";
+                    qualities = [
+                      "HDTV-1080p"
+                      "WEBRip-1080p"
+                      "WEBDL-1080p"
+                    ];
+                  }
+                  { name = "Bluray-720p"; }
+                  {
+                    name = "WEB 720p";
+                    qualities = [
+                      "HDTV-720p"
+                      "WEBRip-720p"
+                      "WEBDL-720p"
+                    ];
+                  }
+                  { name = "Bluray-480p"; }
+                  {
+                    name = "WEB 480p";
+                    qualities = [
+                      "WEBRip-480p"
+                      "WEBDL-480p"
+                    ];
+                  }
+                  { name = "DVD"; }
+                  { name = "SDTV"; }
+                ];
               }
               {
                 trash_id = "4c48f506c1116a3a57ae33f12346bd15"; # [French MULTi.VO] HD Bluray + WEB (1080p)
