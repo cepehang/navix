@@ -28,6 +28,14 @@
       claude-code
       dig
       gparted
+      fd
+      file
+      gh
+      lsof
+      python3
+      tree
+      unzip
+      yq-go
     ];
   };
 
